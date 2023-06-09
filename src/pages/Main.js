@@ -12,9 +12,6 @@ import catCardBig from '../data/category_cards_big.json';
 import catCardSmall from '../data/category_cards_small.json';
 
 export default function Main() {
-// console.log(catCardBig)
-// console.log(catCardBig[0]);
-// console.log(catCardBig[0].cards)
   return (
     <>
       <header>
