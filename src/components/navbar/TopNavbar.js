@@ -29,7 +29,7 @@ export default function TopNavbar() {
             },
           }}
         >
-          ✨{/* <Logo /> */}
+          <Logo />
           <Text b color="inherit" hideIn="xs">
             {AppName}
           </Text>
