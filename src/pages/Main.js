@@ -41,7 +41,7 @@ export default function Main() {
               <CategoryName name={"Cooking 🧑‍🍳"} amount={12} />
               <Row className="horizontal-scroll-container">
                 {
-                  catCardSmall.map((item, index)=>{
+                  catCardSmall[0].cards.map((item, index)=>{
                     return <CategoryCardsSmall key={index} props={item}/>})
                 }
               </Row>
