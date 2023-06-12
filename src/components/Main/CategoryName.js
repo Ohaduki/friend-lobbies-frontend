@@ -2,7 +2,7 @@ import { Row, Text } from "@nextui-org/react";
 
 export default function CategoryName({ name, amount }) {
   return (
-    <Row style={{ marginTop: "2vh" }}>
+    <Row style={{ marginTop: "4vh" }}>
       <Text h4>{name}</Text>
       <Text
         style={{

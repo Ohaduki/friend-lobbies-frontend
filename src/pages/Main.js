@@ -8,6 +8,12 @@ import CategoryName from "../components/Main/CategoryName";
 import CategoryCardsBig from "../components/Main/CategoryCardsBig";
 import CategoryCardsSmall from "../components/Main/CategoryCardsSmall";
 
+<<<<<<< Updated upstream
+=======
+import catCardBig from "../data/category_cards_big.json";
+import catCardSmall from "../data/category_cards_small.json";
+
+>>>>>>> Stashed changes
 export default function Main() {
   return (
     <>
@@ -15,7 +21,7 @@ export default function Main() {
         <TopNavbar />
       </header>
       <main>
-        <Container sm>
+        <Container sm style={{ padding: "0px 12px" }}>
           <Card css={{ $$cardColor: "white" }}>
             <Card.Body>
               <UserInfo
@@ -26,9 +32,29 @@ export default function Main() {
               />
               <DisplayCategory />
               <CategoryName name={"Sports ⚽"} amount={4} />
+<<<<<<< Updated upstream
               <CategoryCardsBig />
               <CategoryName name={"Cooking 🧑‍🍳"} amount={12} />
               <CategoryCardsSmall />
+=======
+              <Row className="horizontal-scroll-container">
+                {catCardBig.map((item, index) => {
+                  return <CategoryCardsBig key={index} props={item} />;
+                })}
+              </Row>
+              <CategoryName name={"Cooking 🧑‍🍳"} amount={12} />
+              <Row className="horizontal-scroll-container">
+                {catCardSmall.map((item, index) => {
+                  return <CategoryCardsSmall key={index} props={item} />;
+                })}
+              </Row>
+              <CategoryName name={"Entertainment 🎭"} amount={4} />
+              <Row className="horizontal-scroll-container">
+                {catCardBig.map((item, index) => {
+                  return <CategoryCardsBig key={index} props={item} />;
+                })}
+              </Row>
+>>>>>>> Stashed changes
             </Card.Body>
           </Card>
         </Container>
