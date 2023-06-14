@@ -40,7 +40,7 @@ export default function UserInfo({ imgSrc, username }) {
             color: "black",
             borderColor: "lightgray",
           }}
-          onClick={handleButtonClick}
+          onPress={handleButtonClick}
           auto
         >
           <Search set="light" />
@@ -55,6 +55,7 @@ export default function UserInfo({ imgSrc, username }) {
             placeholder="xLarge"
             autoFocus
             onBlur={handleInputBlur}
+            aria-label="input-search"
           />
         </div>
       )}
