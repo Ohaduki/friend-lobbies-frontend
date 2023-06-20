@@ -22,7 +22,7 @@ export default function UserInfo({ imgSrc, username }) {
         className={inputVisible ? "welcome-info" : ""}
         style={{ marginLeft: "1rem", lineHeight: 1.2, marginTop: 8 }}
       >
-        Welcome back, <br />{" "}
+        @aviadtheking <br />
         <strong style={{ fontSize: "1.3rem" }}>{username}</strong>
       </Text>
       {!inputVisible && (
@@ -54,6 +54,7 @@ export default function UserInfo({ imgSrc, username }) {
             size="xl"
             placeholder="xLarge"
             autoFocus
+            css={{ width: "100%" }}
             onBlur={handleInputBlur}
             aria-label="input-search"
           />
