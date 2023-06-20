@@ -58,10 +58,14 @@ export default function TopNavbar() {
             },
           }}
         >
-          <Logo />
-          <Text b color="inherit" hideIn="xs">
-            {AppName}
-          </Text>
+          <Navbar.Content>
+            <Navbar.Link href="/">
+            <Logo />
+            <Text b color="inherit" hideIn="xs">
+              {AppName}
+            </Text>
+            </Navbar.Link>
+          </Navbar.Content>
         </Navbar.Brand>
         <Navbar.Content
           enableCursorHighlight
