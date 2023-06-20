@@ -144,8 +144,41 @@ export default function TopNavbar() {
             </Dropdown.Menu>
           </Dropdown>
         </Navbar.Content>
+
         <Navbar.Collapse>
-          {collapseItems.map((item, index) => (
+              <Navbar.CollapseItem activeColor='secondary'>
+                <Link href="/profile-page">
+                  My Profile
+                </Link>
+              </Navbar.CollapseItem>
+              <Navbar.CollapseItem activeColor='secondary'>
+                <Link href="/joined-lobbies">
+                  Joined Lobbies
+                </Link>
+              </Navbar.CollapseItem>
+              <Navbar.CollapseItem activeColor='secondary'>
+                <Link href="/my-lobbies">
+                  My Lobbies
+                </Link>
+              </Navbar.CollapseItem>
+              <Navbar.CollapseItem activeColor='secondary'>
+                <Link href="/create-lobby">
+                  Create Lobby
+                </Link>
+              </Navbar.CollapseItem>
+              <Navbar.CollapseItem activeColor='secondary'>
+                <Link href="/help-and-feedback">
+                  Help and Feedback
+                </Link>
+              </Navbar.CollapseItem>
+              <Navbar.CollapseItem activeColor='secondary'>
+                <Link /* onClick={logOut} */ color='error'>
+                  Log Out
+                </Link>
+              </Navbar.CollapseItem>
+
+
+          {/* {collapseItems.map((item, index) => (
             <Navbar.CollapseItem
               key={item}
               activeColor="secondary"
@@ -166,7 +199,8 @@ export default function TopNavbar() {
                 {item}
               </Link>
             </Navbar.CollapseItem>
-          ))}
+          ))} */}
+
         </Navbar.Collapse>
       </Navbar>
     </Layout>

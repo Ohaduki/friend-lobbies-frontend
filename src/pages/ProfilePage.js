@@ -127,6 +127,7 @@ function ProfilePage() {
                           </Text>
                         </div>
                   </Row> */}
+
                 <Row justify="center" style={{marginLeft: "1vw"}}>
                   <Grid.Container style={{ marginTop: "4vh" }}>
                     <Grid css={{ margin: "auto" }} justify="center">
@@ -181,6 +182,7 @@ function ProfilePage() {
                     </Grid>
                   </Grid.Container>
                 </Row>
+                
                   {/* <Grid.Container style={{ marginTop: "4vh" }}>
                     <Grid css={{ margin: "auto" }}>
                       <div
