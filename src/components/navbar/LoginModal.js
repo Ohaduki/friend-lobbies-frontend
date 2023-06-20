@@ -14,6 +14,9 @@ import "../../styles/LoginModal.css";
 import { AppName } from "../../data/Variables";
 import { Call, Hide, Message, Password, Show, User } from "react-iconly";
 import interest_selection from "../../data/interest_selection.json";
+import DropwdownCategory from "../CreateLobby/DropdownCategory";
+
+
 
 export default function App() {
   const [visible, setVisible] = React.useState(false);
@@ -54,6 +57,11 @@ export default function App() {
     }
   }
 
+    console.log("closed");
+  };
+  const [category, setCategory] = useState(new Set(["Pick Your Interests"]));
+  const { value, reset, bindings } = useInput("");
+
   const validateEmail = (value) => {
     return value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i);
   };
@@ -86,6 +94,7 @@ export default function App() {
         }}
         auto
         onClick={handler}
+        onPress={handler}
       >
         <span style={{ fontWeight: 700 }}>Sign Up</span>
       </Button>
@@ -270,4 +279,4 @@ export default function App() {
       </Modal>
     </div>
   );
-}
+
