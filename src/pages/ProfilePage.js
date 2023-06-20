@@ -219,6 +219,9 @@ function ProfilePage() {
           }
         ></MainCard>
       </main>
+      <footer>
+          <Spacer y={2}/>
+      </footer>
     </>
   );
 }
