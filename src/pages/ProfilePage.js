@@ -85,7 +85,7 @@ function ProfilePage() {
                     </Text>
                   </center>
 
-                  <Row style={{marginTop:"4vh"}} justify="center">
+                  {/* <Row justify="center">
                     <div
                           style={{
                             margin: 0,
@@ -126,8 +126,61 @@ function ProfilePage() {
                             Lobbies Created
                           </Text>
                         </div>
-                  </Row>
-                  
+                  </Row> */}
+                <Row justify="center" style={{marginLeft: "1vw"}}>
+                  <Grid.Container style={{ marginTop: "4vh" }}>
+                    <Grid css={{ margin: "auto" }} justify="center">
+                      <div
+                        style={{
+                          margin: 0,
+                          marginRight: "4vw",
+                          marginLeft: "2vw",
+                        }}
+                      >
+                        <Text css={{ margin: 0, textAlign: "center" }} h4>
+                          100+
+                        </Text>
+                        <Text css={{ textAlign: "center" }}>Friends</Text>
+                      </div>
+                    </Grid>
+                    <Grid css={{ margin: "auto" }} justify="center">
+                      <div style={{ margin: 0, marginRight: "4vw" }}>
+                        <Text css={{ margin: 0, textAlign: "center" }} h4>
+                          14
+                        </Text>
+                        <Text css={{ textAlign: "center" }}>Lobbies</Text>
+                      </div>
+                    </Grid>
+                    <Grid css={{ margin: "auto" }} justify="center">
+                      <div style={{ margin: 0, marginRight: "4vw" }}>
+                        <Text css={{ margin: 0, textAlign: "center" }} h4>
+                          23
+                        </Text>
+                        <Text css={{ textAlign: "center" }}>Achievements</Text>
+                      </div>
+                    </Grid>
+                    <Grid css={{ margin: "auto" }} justify="center">
+                      <div style={{ margin: 0, marginRight: "4vw" }}>
+                        <Text css={{ margin: 0, textAlign: "center" }} h4>
+                          12
+                        </Text>
+                        <Text css={{ textAlign: "center" }}>
+                          Lobbies Joined
+                        </Text>
+                      </div>
+                    </Grid>
+                    <Grid css={{ margin: "auto" }} justify="center">
+                      <div style={{ margin: 0, marginRight: "4vw" }}>
+                        <Text css={{ margin: 0, textAlign: "center" }} h4>
+                          5
+                        </Text>
+                        <Text css={{ textAlign: "center" }}>
+                          Lobbies Created
+                        </Text>
+                      </div>
+                    </Grid>
+                  </Grid.Container>
+                </Row>
                   {/* <Grid.Container style={{ marginTop: "4vh" }}>
                     <Grid css={{ margin: "auto" }}>
                       <div
@@ -142,7 +195,6 @@ function ProfilePage() {
                         </Text>
                         <Text css={{ textAlign: "center" }}>Friends</Text>
                       </div>
-
                     </Grid>
                     <Grid css={{ margin: "auto" }}>
                       <div style={{ margin: 0, marginRight: "4vw" }}>
@@ -151,7 +203,6 @@ function ProfilePage() {
                         </Text>
                         <Text css={{ textAlign: "center" }}>Lobbies</Text>
                       </div>
-
                     </Grid>
                     <Grid css={{ margin: "auto" }}>
                       <div style={{ margin: 0, marginRight: "4vw" }}>
@@ -160,7 +211,6 @@ function ProfilePage() {
                         </Text>
                         <Text css={{ textAlign: "center" }}>Achievements</Text>
                       </div>
-
                     </Grid>
                     <Grid css={{ margin: "auto" }}>
                       <div style={{ margin: 0, marginRight: "4vw" }}>
@@ -171,7 +221,6 @@ function ProfilePage() {
                           Lobbies Joined
                         </Text>
                       </div>
-
                     </Grid>
                     <Grid css={{ margin: "auto" }}>
                       <div style={{ margin: 0, marginRight: "4vw" }}>
@@ -183,8 +232,8 @@ function ProfilePage() {
                         </Text>
                       </div>
                     </Grid>
-                  </Grid.Container>
-                  */}
+                  </Grid.Container> */}
+                 
 
 
                   <Spacer style={{ width: "100%" }} y={2} />
