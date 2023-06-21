@@ -21,13 +21,6 @@ function ProfilePage() {
 
 
   // REPLACE WITH FETCHED USER
-  const [username, setUsername] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [picture, setPicture] = useState('');
-  const [interests, setInterests] = useState([]);
-  const [email, setEmail] = useState('');
-  const [userDetails, setUserDetails] = useState({});
 
   const userObject = {
     name: "Aviad",
@@ -46,13 +39,14 @@ function ProfilePage() {
   // const [updatedName, setUpdatedName] = useState(
   //   userObject.name + " " + userObject.surname
   // );
-  const [updatedFirstName, setUpdatedFirstName] = useState(firstName);
-  const [updatedLastName, setUpdatedLastName] = useState(lastName);
-  const [updatedLocation, setUpdatedLocation] = useState(userObject.location);
-  const [updatedBio, setUpdatedBio] = useState(userObject.bio);
-  const [updatedPhoneNumber, setUpdatedPhoneNumber] = useState(
-    userObject.phoneNumber
-  );
+  const [updatedFirstName, setUpdatedFirstName] = useState('');
+  const [updatedLastName, setUpdatedLastName] = useState('');
+  const [updatedLocation, setUpdatedLocation] = useState('Israel');
+  const [updatedBio, setUpdatedBio] = useState("Hello Friend Zone! I'm new here!");
+  const [updatedPhoneNumber, setUpdatedPhoneNumber] = useState('');
+  const [userPhoto, setUserPhoto] = useState('');
+  const [userInterests, setUserInterests] = useState([]);
+
   const [isUpdating, setIsUpdating] = useState(false);
 
   const navigate = useNavigate();
@@ -61,17 +55,31 @@ function ProfilePage() {
     const token = getCookie('token');
     if(token){
       const data = jwt_decode(token);
-      const {username, firstName, lastName, picture, email, interests} = data
-      setUsername(username);
-      setFirstName(firstName);
-      setLastName(lastName);
-      setPicture(picture);
-      setEmail(email);
-      setInterests(interests)
-      setUserDetails(data);
+      const { firstName, lastName, picture, interests} = data
+      setUpdatedFirstName(firstName);
+      setUpdatedLastName(lastName);
+      setUserPhoto(picture);
+      setUserInterests(interests);
+      fetchUserData();
+
     }
     }, [])
 
+    async function fetchUserData(){
+      try {
+        const token = getCookie('token');
+        const {_id} = jwt_decode(token)
+        const config = {
+            headers: {
+              Authorization: "Bearer " + token
+            }    
+        }
+        const res = await axios.get(`${SERVERURL}/users/single`, config)
+        console.log(res);
+      } catch (error) {
+        
+      }
+    }
 
   function handleSubmission() {
     // send the updated object
@@ -79,18 +87,15 @@ function ProfilePage() {
     setIsUpdating(false);
   }
 
-  // Split the updated input into name and surname
-  // let splitName = updatedName.split(" ");
-
   // The updated object to send to the server
   const updatedUserObject = {
-    // name: splitName[0],
-    name: firstName,
-    // surname: splitName.slice(1).join(" "),
-    surname: lastName,
-    location: updatedBio,
+    name: updatedFirstName,
+    surname: updatedLastName,
+    location: updatedLocation,
     bio: updatedBio,
     phoneNumber: updatedPhoneNumber,
+    profilePhoto: userPhoto,
+    interests: userInterests
   };
 
   return (
@@ -107,7 +112,7 @@ function ProfilePage() {
             <>
               <div>
                 <ProfileHeader
-                  userObject={userObject}
+                  userObject={updatedUserObject}
                   isUpdating={isUpdating}
                   updatedFirstName={updatedFirstName}
                   setUpdatedFirstName={setUpdatedFirstName}
@@ -121,7 +126,7 @@ function ProfilePage() {
 
                 <center>
                   <ProfilePageHeader
-                    userObject={userObject}
+                    userObject={updatedUserObject}
                     isUpdating={isUpdating}
                     updatedName={updatedFirstName}
                     setUpdatedName={setUpdatedFirstName}
@@ -134,7 +139,7 @@ function ProfilePage() {
                   />
                 </center>
 
-                <ProfileStats userObject={userObject} />
+                {/* <ProfileStats userObject={userObject} /> */}
               </div>
 
               <BioArea
@@ -156,7 +161,7 @@ function ProfilePage() {
           style={{ marginTop: "2vh" }}
           children={
             <>
-              <Interests userObject={userDetails} />
+              <Interests userObject={updatedUserObject} />
               <Button
                 light
                 flat
