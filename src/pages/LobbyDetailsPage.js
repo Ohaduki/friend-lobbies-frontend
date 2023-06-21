@@ -308,7 +308,6 @@ function LobbyDetailsPage() {
                 <Text h3 css={{ textAlign: "center", fontWeight: 600 }}>
                   Admin
                 </Text>
-
                 <Grid.Container justify="center">
                   <Badge
                     content={<AddUser set="bold" />}
@@ -343,7 +342,6 @@ function LobbyDetailsPage() {
                     </Grid>
                   </Badge>
                 </Grid.Container>
-
                 <Spacer y={0.4} />
                 {/* <Row justify="center">
                 <Text css={{ marginBottom: 0, marginTop: 2 }} h4>

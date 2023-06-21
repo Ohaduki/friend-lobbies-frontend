@@ -16,6 +16,7 @@ import JoinedLobbies from "./pages/JoinedLobbies";
 import CreatedLobbies from "./pages/CreatedLobbies";
 import Notifications from "./pages/Notifications";
 
+
 function App() {
   const [user, setUser] = useState("");
   useEffect(() => {

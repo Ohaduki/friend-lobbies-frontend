@@ -18,6 +18,8 @@ import UserContext from "../../context/UserContext.jsx";
 import { Image } from "@nextui-org/react";
 import { Badge } from "@nextui-org/react";
 
+
+
 export default function TopNavbar() {
   const navigate = useNavigate();
   const { user, setUser } = useContext(UserContext);
