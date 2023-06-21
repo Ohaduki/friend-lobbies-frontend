@@ -18,10 +18,12 @@ import WaitlistData from "../components/LobbyDetailsPage/WaitlistData";
 import {
   AddUser,
   Calendar,
+  ChevronLeft,
   ChevronRight,
   InfoSquare,
   Location,
   Search,
+  Send,
   Star,
 } from "react-iconly";
 import MainCard from "../components/Reusable/MainCard";
@@ -34,6 +36,8 @@ import LazyLoad from "react-lazy-load";
 import CategoryCardsBig from "../components/Main/CategoryCardsBig";
 import { ScrollMenu } from "react-horizontal-scrolling-menu";
 import useDrag from "../hooks/useDrag";
+import Message from "../components/Reusable/Message";
+import { Input } from "@nextui-org/react";
 
 function LobbyDetailsPage() {
   const { dragStart, dragStop, dragMove, dragging } = useDrag();
@@ -243,7 +247,7 @@ function LobbyDetailsPage() {
                 </Container>
                 <Spacer y={2} />
                 <Grid.Container justify="center">
-                  <Button
+                  {/* <Button
                     color=""
                     css={{
                       color: "white",
@@ -253,6 +257,16 @@ function LobbyDetailsPage() {
                     iconRight={<ChevronRight set="bold" />}
                   >
                     Join Lobby
+                  </Button> */}
+                  <Button
+                    color="error"
+                    flat
+                    css={{
+                      fontWeight: "700",
+                    }}
+                    iconRight={<ChevronLeft set="bold" />}
+                  >
+                    Leave the Lobby
                   </Button>
                 </Grid.Container>
               </Card.Body>
@@ -308,7 +322,7 @@ function LobbyDetailsPage() {
                 </Badge>
               </Grid.Container>
 
-              <Spacer y={0.4} />
+              {/* <Spacer y={0.4} />
               <Row justify="center">
                 <Text css={{ marginBottom: 0, marginTop: 2 }} h4>
                   Rating:{" "}
@@ -323,7 +337,94 @@ function LobbyDetailsPage() {
               <Spacer y={0.2} />
               <Row justify="center">
                 <small>Based on 32 reviews</small>
-              </Row>
+              </Row> */}
+            </>
+          }
+        />
+        <Spacer />
+        {/* display the chat only if joined the lobby */}
+        <MainCard
+          children={
+            <>
+              <Text h3 css={{ textAlign: "center" }}>
+                Recent Messages
+              </Text>
+              <Spacer />
+              <Container
+                css={{
+                  border: "2px solid lightgray",
+                  maxW: 600,
+                  maxH: 800,
+                  padding: 16,
+                }}
+              >
+                {/* implement mapping through messages */}
+                <div id="lobby-chat">
+                  <Message
+                    profilePhoto={
+                      "https://ca.slack-edge.com/T046G9D7MGU-U048E1E2HME-ec532a93d7f3-512"
+                    }
+                    profileName={"superguy"}
+                    message={"Where do we meet guys?"}
+                    type={"message"}
+                  />
+                  <Message
+                    profilePhoto={
+                      "https://res.cloudinary.com/denzwvfde/image/upload/v1686088141/user_pzj7gl.png"
+                    }
+                    profileName={"hazbulla2"}
+                    message={"It's written in the location field bro"}
+                    type={"message"}
+                    reply
+                  />
+                  <Message
+                    profilePhoto={
+                      "https://ca.slack-edge.com/T046G9D7MGU-U04ALRSD91T-6a4689126259-512"
+                    }
+                    profileName={"aviadtheking"}
+                    message={"Let's play Kahoot instead"}
+                    type={"message"}
+                  />
+                  <Message
+                    profilePhoto={
+                      "https://ca.slack-edge.com/T046G9D7MGU-U0470CYKK1R-904a18162ebd-72"
+                    }
+                    profileName={"ohadthepro"}
+                    message={"Yalla, but I'm going to win anyways!"}
+                    type={"message"}
+                  />
+                  <Message
+                    profilePhoto={
+                      "https://upload.wikimedia.org/wikipedia/en/0/03/Walter_White_S5B.png"
+                    }
+                    profileName={"notadrugdealer"}
+                    message={"Let me cook."}
+                    type={"message"}
+                  />
+                </div>
+                <div style={{ marginTop: 16 }}>
+                  <Input
+                    placeholder="Write a message..."
+                    bordered
+                    css={{ backgroundColor: "white" }}
+                    contentRightStyling={false}
+                    contentRight={
+                      <Button
+                        style={{
+                          padding: 8,
+                          color: "white",
+                          backgroundColor: "black",
+                        }}
+                        color=""
+                        auto
+                      >
+                        <Send set="bold" />
+                      </Button>
+                    }
+                    fullWidth
+                  />
+                </div>
+              </Container>
             </>
           }
         />

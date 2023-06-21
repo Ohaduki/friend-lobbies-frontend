@@ -40,7 +40,7 @@ function LobbyCreation() {
   const [capacity, setCapacity] = useState(1);
   const [images, setImages] = useState([]);
 
-  console.log(images);
+  // console.log(images);
 
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const newLobby = {
@@ -188,7 +188,7 @@ function LobbyCreation() {
         />
       </main>
       <footer>
-          <Spacer y={2}/>
+        <Spacer y={2} />
       </footer>
     </>
   );
