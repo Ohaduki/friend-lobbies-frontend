@@ -18,6 +18,7 @@ const ProfilePageHeader = ({
     <>
       <div>
         {isUpdating ? (
+          <>
           <Input
             css={{ marginTop: "2vh", maxWidth: 300 }}
             bordered
@@ -27,6 +28,17 @@ const ProfilePageHeader = ({
             value={updatedFirstName}
             onChange={(e) => setUpdatedFirstName(e.target.value)}
           />
+          <Input
+            css={{ marginTop: "2vh", maxWidth: 300 }}
+            bordered
+            contentLeft={
+              <User set="bold" style={{ height: 14, color: "#4285F4" }} />
+            }
+            value={updatedLastName}
+            onChange={(e) => setUpdatedLastName(e.target.value)}
+          />
+          
+          </>
         ) : (
           <Text h3 css={{ marginTop: "2vh" }}>
             {userObject.name + " " + userObject.surname}

@@ -19,26 +19,20 @@ import SERVERURL from "../lib/SERVERURL";
 
 function ProfilePage() {
 
+  // const userObject = {
+  //   name: "Aviad",
+  //   surname: "The King",
+  //   phoneNumber: "+972 33 123 45 532",
+  //   profilePhoto:
+  //     "https://ca.slack-edge.com/T046G9D7MGU-U04ALRSD91T-6a4689126259-72",
+  //   location: "Tel Aviv, Israel",
+  //   friends: 123,
+  //   lobbiesJoined: 14,
+  //   lobbiesCreated: 5,
+  //   bio: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+  //   interests: ["Book Club", "Coding", "Video Games"],
+  // };
 
-  // REPLACE WITH FETCHED USER
-
-  const userObject = {
-    name: "Aviad",
-    surname: "The King",
-    phoneNumber: "+972 33 123 45 532",
-    profilePhoto:
-      "https://ca.slack-edge.com/T046G9D7MGU-U04ALRSD91T-6a4689126259-72",
-    location: "Tel Aviv, Israel",
-    friends: 123,
-    lobbiesJoined: 14,
-    lobbiesCreated: 5,
-    bio: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-    interests: ["Book Club", "Coding", "Video Games"],
-  };
-
-  // const [updatedName, setUpdatedName] = useState(
-  //   userObject.name + " " + userObject.surname
-  // );
   const [updatedFirstName, setUpdatedFirstName] = useState('');
   const [updatedLastName, setUpdatedLastName] = useState('');
   const [updatedLocation, setUpdatedLocation] = useState('Israel');
@@ -61,7 +55,6 @@ function ProfilePage() {
       setUserPhoto(picture);
       setUserInterests(interests);
       fetchUserData();
-
     }
     }, [])
 
@@ -77,22 +70,31 @@ function ProfilePage() {
       }
     }
 
-  function handleSubmission() {
-    // send the updated object
+    const updatedUserObject = {
+      name: updatedFirstName,
+      surname: updatedLastName,
+      location: updatedLocation,
+      bio: updatedBio,
+      phoneNumber: updatedPhoneNumber,
+      profilePhoto: userPhoto,
+      interests: userInterests
+    };
 
+  async function handleSubmission() {
+    // send the updated object
+    try {
+      const token = getCookie('token');
+      const {_id} = jwt_decode(token)
+      const res = await axios.put(`${SERVERURL}/users/${_id}`, updatedUserObject, {withCredentials: true})
+      console.log(res);
+    } catch (error) {
+      
+    }
     setIsUpdating(false);
   }
 
   // The updated object to send to the server
-  const updatedUserObject = {
-    name: updatedFirstName,
-    surname: updatedLastName,
-    location: updatedLocation,
-    bio: updatedBio,
-    phoneNumber: updatedPhoneNumber,
-    profilePhoto: userPhoto,
-    interests: userInterests
-  };
+
 
   return (
     <>
@@ -141,7 +143,7 @@ function ProfilePage() {
               <BioArea
                 isUpdating={isUpdating}
                 updatedBio={updatedBio}
-                userObject={userObject}
+                userObject={updatedUserObject}
                 setUpdatedBio={setUpdatedBio}
               />
               <EditProfileButton
