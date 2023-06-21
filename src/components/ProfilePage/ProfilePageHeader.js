@@ -5,8 +5,10 @@ import { Input, Text } from "@nextui-org/react";
 const ProfilePageHeader = ({
   userObject,
   isUpdating,
-  updatedName,
-  setUpdatedName,
+  updatedFirstName,
+  setUpdatedFirstName,
+  updatedLastName,
+  setUpdatedLastName,
   updatedPhoneNumber,
   setUpdatedPhoneNumber,
   updatedLocation,
@@ -22,8 +24,8 @@ const ProfilePageHeader = ({
             contentLeft={
               <User set="bold" style={{ height: 14, color: "#4285F4" }} />
             }
-            value={updatedName}
-            onChange={(e) => setUpdatedName(e.target.value)}
+            value={updatedFirstName}
+            onChange={(e) => setUpdatedFirstName(e.target.value)}
           />
         ) : (
           <Text h3 css={{ marginTop: "2vh" }}>

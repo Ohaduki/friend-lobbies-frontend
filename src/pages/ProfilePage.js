@@ -1,7 +1,7 @@
 import { Button, Spacer, Text } from "@nextui-org/react";
 import TopNavbar from "../components/navbar/TopNavbar";
 import "../styles/Main.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import MainCard from "../components/Reusable/MainCard";
@@ -12,8 +12,23 @@ import ProfilePageHeader from "../components/ProfilePage/ProfilePageHeader";
 import BioArea from "../components/ProfilePage/BioArea";
 import EditProfileButton from "../components/ProfilePage/EditProfileButton";
 
+import axios from 'axios';
+import jwt_decode from 'jwt-decode';
+import getCookie from "../lib/getCookie";
+import SERVERURL from "../lib/SERVERURL";
+
 function ProfilePage() {
+
+
   // REPLACE WITH FETCHED USER
+  const [username, setUsername] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [picture, setPicture] = useState('');
+  const [interests, setInterests] = useState([]);
+  const [email, setEmail] = useState('');
+  const [userDetails, setUserDetails] = useState({});
+
   const userObject = {
     name: "Aviad",
     surname: "The King",
@@ -28,9 +43,11 @@ function ProfilePage() {
     interests: ["Book Club", "Coding", "Video Games"],
   };
 
-  const [updatedName, setUpdatedName] = useState(
-    userObject.name + " " + userObject.surname
-  );
+  // const [updatedName, setUpdatedName] = useState(
+  //   userObject.name + " " + userObject.surname
+  // );
+  const [updatedFirstName, setUpdatedFirstName] = useState(firstName);
+  const [updatedLastName, setUpdatedLastName] = useState(lastName);
   const [updatedLocation, setUpdatedLocation] = useState(userObject.location);
   const [updatedBio, setUpdatedBio] = useState(userObject.bio);
   const [updatedPhoneNumber, setUpdatedPhoneNumber] = useState(
@@ -40,6 +57,22 @@ function ProfilePage() {
 
   const navigate = useNavigate();
 
+  useEffect(()=>{
+    const token = getCookie('token');
+    if(token){
+      const data = jwt_decode(token);
+      const {username, firstName, lastName, picture, email, interests} = data
+      setUsername(username);
+      setFirstName(firstName);
+      setLastName(lastName);
+      setPicture(picture);
+      setEmail(email);
+      setInterests(interests)
+      setUserDetails(data);
+    }
+    }, [])
+
+
   function handleSubmission() {
     // send the updated object
 
@@ -47,12 +80,14 @@ function ProfilePage() {
   }
 
   // Split the updated input into name and surname
-  let splitName = updatedName.split(" ");
+  // let splitName = updatedName.split(" ");
 
   // The updated object to send to the server
   const updatedUserObject = {
-    name: splitName[0],
-    surname: splitName.slice(1).join(" "),
+    // name: splitName[0],
+    name: firstName,
+    // surname: splitName.slice(1).join(" "),
+    surname: lastName,
     location: updatedBio,
     bio: updatedBio,
     phoneNumber: updatedPhoneNumber,
@@ -74,8 +109,10 @@ function ProfilePage() {
                 <ProfileHeader
                   userObject={userObject}
                   isUpdating={isUpdating}
-                  updatedName={updatedName}
-                  setUpdatedName={setUpdatedName}
+                  updatedFirstName={updatedFirstName}
+                  setUpdatedFirstName={setUpdatedFirstName}
+                  updatedLastName={updatedLastName}
+                  setUpdatedLastName={setUpdatedLastName}
                   updatedPhoneNumber={updatedPhoneNumber}
                   setUpdatedPhoneNumber={setUpdatedPhoneNumber}
                   updatedLocation={updatedLocation}
@@ -86,8 +123,10 @@ function ProfilePage() {
                   <ProfilePageHeader
                     userObject={userObject}
                     isUpdating={isUpdating}
-                    updatedName={updatedName}
-                    setUpdatedName={setUpdatedName}
+                    updatedName={updatedFirstName}
+                    setUpdatedName={setUpdatedFirstName}
+                    updatedLastName={updatedLastName}
+                    setUpdatedLastName={setUpdatedLastName}
                     updatedPhoneNumber={updatedPhoneNumber}
                     setUpdatedPhoneNumber={setUpdatedPhoneNumber}
                     updatedLocation={updatedLocation}
@@ -117,7 +156,7 @@ function ProfilePage() {
           style={{ marginTop: "2vh" }}
           children={
             <>
-              <Interests userObject={userObject} />
+              <Interests userObject={userDetails} />
               <Button
                 light
                 flat
