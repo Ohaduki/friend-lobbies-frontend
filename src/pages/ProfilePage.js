@@ -69,15 +69,11 @@ function ProfilePage() {
       try {
         const token = getCookie('token');
         const {_id} = jwt_decode(token)
-        const config = {
-            headers: {
-              Authorization: "Bearer " + token
-            }    
-        }
-        const res = await axios.get(`${SERVERURL}/users/single`, config)
-        console.log(res);
+        const res = await axios.get(`${SERVERURL}/users/single/${_id}`, {withCredentials: true})
+        const data = res.data;
+        setUpdatedPhoneNumber(data.phone);
       } catch (error) {
-        
+          console.log(error)
       }
     }
 
