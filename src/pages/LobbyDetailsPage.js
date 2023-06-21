@@ -273,7 +273,7 @@ function LobbyDetailsPage() {
                   content={<AddUser set="bold" />}
                   variant={"flat"}
                   color={"default"}
-                  horizontalOffset={"-5%"}
+                  horizontalOffset={"-15%"}
                   css={{
                     cursor: "pointer",
                   }}
@@ -296,7 +296,7 @@ function LobbyDetailsPage() {
                         </Badge>
                         <div style={{ margin: "4px 0 0 12px" }}>
                           <Text h4 css={{ marginBottom: 0 }}>
-                            Super Guy
+                            Your Name Hereeee
                           </Text>
                           <Text h5 css={{ fontWeight: 400 }}>
                             @superpuperguy
@@ -367,7 +367,7 @@ function LobbyDetailsPage() {
         />
       </main>
       <footer>
-          <Spacer y={2}/>
+        <Spacer y={2} />
       </footer>
     </>
   );
