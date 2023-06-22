@@ -11,6 +11,7 @@ export default function Message({
   lobbyID,
   buttons,
   message,
+  _id
 }) {
   const navigate = useNavigate();
 
