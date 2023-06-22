@@ -73,6 +73,7 @@ function InterestSelection() {
         >
           Continue
         </Button>
+        <Spacer y={4} />
       </main>
     </>
   );
