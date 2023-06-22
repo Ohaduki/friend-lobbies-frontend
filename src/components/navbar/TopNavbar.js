@@ -15,15 +15,19 @@ import { useNavigate } from "react-router-dom";
 import LoginModal from "./LoginModal.js";
 import { useContext } from "react";
 import UserContext from "../../context/UserContext.jsx";
+import { Image } from "@nextui-org/react";
+import { Badge } from "@nextui-org/react";
+
+
 
 export default function TopNavbar() {
   const navigate = useNavigate();
-  const {user, setUser} = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
 
   const logoutHandler = () => {
-    setUser('')
-    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
-  }
+    setUser("");
+    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+  };
 
   const handleDropdownAction = (actionKey) => {
     switch (actionKey) {
@@ -33,9 +37,19 @@ export default function TopNavbar() {
       case "my_interests":
         navigate("/interest-selection");
         break;
+      case "created_lobbies":
+        navigate("/created-lobbies");
+        break;
+      case "joined_lobbies":
+        navigate("/joined-lobbies");
+        break;
+      case "messages_notifications":
+        navigate("/notifications");
+        break;
       case "logout":
         logoutHandler();
         break;
+
       // ... handle other action keys ...
     }
   };
@@ -69,10 +83,18 @@ export default function TopNavbar() {
             },
           }}
         >
-          <Logo />
-          <Text b color="inherit" hideIn="xs">
-            {AppName}
-          </Text>
+          <Navbar.Content>
+            <Navbar.Link href="/">
+              {/* <Logo /> */}
+              <Image
+                style={{ height: 40, padding: 10 }}
+                src="https://imgur.com/HPgNWJc.png"
+              />
+              {/* <Text b color="inherit" hideIn="xs">
+                {AppName}
+              </Text> */}
+            </Navbar.Link>
+          </Navbar.Content>
         </Navbar.Brand>
         <Navbar.Content
           enableCursorHighlight
@@ -80,21 +102,21 @@ export default function TopNavbar() {
           hideIn="xs"
           variant="highlight-solid"
         >
-          <Navbar.Link href="/" isActive={isActive("/")}>
+          {user ? <Navbar.Link href="/" isActive={isActive("/")}>
             Home
-          </Navbar.Link>
-          <Navbar.Link
+          </Navbar.Link> : <></>}
+          {user ? <Navbar.Link
             href="/create-lobby"
             isActive={isActive("/create-lobby")}
           >
             Create Lobby
-          </Navbar.Link>
-          <Navbar.Link href="/rules" isActive={isActive("/rules")}>
+          </Navbar.Link> : <></>}
+          {user ? <Navbar.Link href="/rules" isActive={isActive("/rules")}>
             Rules
-          </Navbar.Link>
-          <Navbar.Link href="/faq" isActive={isActive("/faq")}>
+          </Navbar.Link> : <></>}
+          {user ? <Navbar.Link href="/faq" isActive={isActive("/faq")}>
             FAQ
-          </Navbar.Link>
+          </Navbar.Link> : <></>}
         </Navbar.Content>
         <Navbar.Content
           css={{
@@ -106,17 +128,27 @@ export default function TopNavbar() {
         >
           <Dropdown placement="bottom-right">
             <Navbar.Item>
-              {user ? <Dropdown.Trigger>
-                <Avatar
-                  bordered
-                  squared
-                  as="button"
-                  color="secondary"
-                  size="md"
-                  src={user.picture}
-                />
-              </Dropdown.Trigger> :
-              <LoginModal />}
+              {user ? (
+                <Badge
+                  content="new"
+                  color="error"
+                  placement="top-right"
+                  size="xs"
+                >
+                  <Dropdown.Trigger>
+                    <Avatar
+                      bordered
+                      squared
+                      as="button"
+                      color="secondary"
+                      size="md"
+                      src={user.picture}
+                    />
+                  </Dropdown.Trigger>
+                </Badge>
+              ) : (
+                <LoginModal />
+              )}
             </Navbar.Item>
             <Dropdown.Menu
               aria-label="User menu actions"
@@ -142,6 +174,19 @@ export default function TopNavbar() {
                 Created Lobbies
               </Dropdown.Item>
               <Dropdown.Item key="friends">Friends</Dropdown.Item>
+
+              <Dropdown.Item key="messages_notifications">
+                <Badge
+                  content="new"
+                  color="error"
+                  placement="top-right"
+                  size="xs"
+                  horizontalOffset="-10%"
+                  verticalOffset="-10%"
+                >
+                  Messages & Notifications
+                </Badge>
+              </Dropdown.Item>
               <Dropdown.Item key="help_and_feedback" withDivider>
                 Help & Feedback
               </Dropdown.Item>
@@ -151,8 +196,28 @@ export default function TopNavbar() {
             </Dropdown.Menu>
           </Dropdown>
         </Navbar.Content>
+
         <Navbar.Collapse>
-          {collapseItems.map((item, index) => (
+          <Navbar.CollapseItem activeColor="secondary">
+            <Link href="/profile-page">My Profile</Link>
+          </Navbar.CollapseItem>
+          <Navbar.CollapseItem activeColor="secondary">
+            <Link href="/joined-lobbies">Joined Lobbies</Link>
+          </Navbar.CollapseItem>
+          <Navbar.CollapseItem activeColor="secondary">
+            <Link href="/created-lobbies">Created Lobbies</Link>
+          </Navbar.CollapseItem>
+          <Navbar.CollapseItem activeColor="secondary">
+            <Link href="/create-lobby">Create Lobby</Link>
+          </Navbar.CollapseItem>
+          <Navbar.CollapseItem activeColor="secondary">
+            <Link href="/help-and-feedback">Help and Feedback</Link>
+          </Navbar.CollapseItem>
+          <Navbar.CollapseItem activeColor="secondary">
+            <Link /* onClick={logOut} */ color="error">Log Out</Link>
+          </Navbar.CollapseItem>
+
+          {/* {collapseItems.map((item, index) => (
             <Navbar.CollapseItem
               key={item}
               activeColor="secondary"
@@ -173,7 +238,7 @@ export default function TopNavbar() {
                 {item}
               </Link>
             </Navbar.CollapseItem>
-          ))}
+          ))} */}
         </Navbar.Collapse>
       </Navbar>
     </Layout>

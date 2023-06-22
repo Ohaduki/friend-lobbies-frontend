@@ -1,55 +1,79 @@
-import {
-  Avatar,
-  Badge,
-  Button,
-  Col,
-  Container,
-  Grid,
-  Row,
-  Spacer,
-  Text,
-} from "@nextui-org/react";
+import { Button, Spacer, Text } from "@nextui-org/react";
 import TopNavbar from "../components/navbar/TopNavbar";
-import BGsvg from "../assets/BGsvg";
 import "../styles/Main.css";
+import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import MainCard from "../components/Reusable/MainCard";
-import interest_selection from "../data/interest_selection.json";
-import { ScrollMenu } from "react-horizontal-scrolling-menu";
-import { useEffect, useContext } from "react";
-import useDrag from "../hooks/useDrag";
-import { useNavigate } from "react-router-dom";
-import { Location } from "react-iconly";
+import ProfileHeader from "../components/ProfilePage/ProfileHeader";
+import ProfileStats from "../components/ProfilePage/ProfileStats";
+import Interests from "../components/ProfilePage/Interests";
+import ProfilePageHeader from "../components/ProfilePage/ProfilePageHeader";
+import BioArea from "../components/ProfilePage/BioArea";
+import EditProfileButton from "../components/ProfilePage/EditProfileButton";
 import UserContext from "../context/UserContext";
 
 function ProfilePage() {
-  const {user, setUser} = useContext(UserContext);
+  // REPLACE WITH FETCHED USER
+
+
+  const {user, setUser} = useContext(UserContext)
+
+  const userObject = {
+    ...user,
+    name: user.firstName,
+    surname: user.lastName,
+    phoneNumber: user.phone,
+    profilePhoto: user.picture,
+    location: user.location,
+    friends: 123,
+    lobbiesJoined: 14,
+    lobbiesCreated: 5
+  }
+
+  if(!userObject.location){
+    userObject.location = "Tel Aviv, Israel"
+  }
+
+  if(!userObject.bio){
+    userObject.bio = "No bio yet. Why don't you add one?"
+  }
+
+  const [updatedName, setUpdatedName] = useState(
+    userObject.name + " " + userObject.surname
+  );
+  const [updatedLocation, setUpdatedLocation] = useState(userObject.location);
+  const [updatedBio, setUpdatedBio] = useState(userObject.bio);
+  const [updatedPhoneNumber, setUpdatedPhoneNumber] = useState(
+    userObject.phoneNumber
+  );
+  const [isUpdating, setIsUpdating] = useState(false);
+
   const navigate = useNavigate();
 
-  const { dragStart, dragStop, dragMove, dragging } = useDrag();
-  const handleDrag =
-    ({ scrollContainer }) =>
-    (ev) =>
-      dragMove(ev, (posDiff) => {
-        if (scrollContainer.current) {
-          scrollContainer.current.scrollLeft += posDiff;
-        }
-      });
-
-  function onWheel(apiObj, ev) {
-    const isThouchpad = Math.abs(ev.deltaX) !== 0 || Math.abs(ev.deltaY) < 15;
-
-    if (isThouchpad) {
-      ev.stopPropagation();
-      return;
-    }
-
-    if (ev.deltaY > 0) {
-      apiObj.scrollNext();
-    } else if (ev.deltaY < 0) {
-      apiObj.scrollPrev();
-    }
+  function handleSubmission() {
+    // send the updated object
+    const data = new FormData();
+    data.append("firstName", updatedUserObject.firstName);
+    data.append("lastName", updatedUserObject.lastName);
+    data.append("location", updatedUserObject.location);
+    data.append("bio", updatedUserObject.bio);
+    data.append("phoneNumber", updatedUserObject.phoneNumber);
+    data.append("profilePhoto", updatedUserObject.profilePhoto);
+    setIsUpdating(false);
   }
+
+  // Split the updated input into name and surname
+  let splitName = updatedName.split(" ");
+
+  // The updated object to send to the server
+  const updatedUserObject = {
+    firstName: splitName[0],
+    lastName: splitName.slice(1).join(" "),
+    location: updatedLocation,
+    bio: updatedBio,
+    phoneNumber: updatedPhoneNumber
+  };
 
   return (
     <>
@@ -63,105 +87,45 @@ function ProfilePage() {
         <MainCard
           children={
             <>
-              <Grid.Container>
-                <Grid style={{ width: "100%" }}>
-                  <Row>
-                    <Col css={{ margin: "auto" }}>
-                      <Avatar
-                        src={user.picture}
-                        css={{ size: "$20", margin: "auto" }}
-                      />
-                    </Col>
-                  </Row>
-                  <center>
-                    <Text h3 css={{ marginTop: "2vh" }}>
-                      {user.firstName} {user.lastName}
-                    </Text>
+              <div>
+                <ProfileHeader
+                  userObject={userObject}
+                  isUpdating={isUpdating}
+                  updatedName={updatedName}
+                  setUpdatedName={setUpdatedName}
+                  updatedPhoneNumber={updatedPhoneNumber}
+                  setUpdatedPhoneNumber={setUpdatedPhoneNumber}
+                  updatedLocation={updatedLocation}
+                  setUpdatedLocation={setUpdatedLocation}
+                />
 
-                    {/* <Text>
-                      <Location
-                        set="bold"
-                        style={{ height: 14, color: "red" }}
-                      />
-                      Tel Aviv, Israel{" "}
-                    </Text> */}
-                  </center>
+                <center>
+                  <ProfilePageHeader
+                    userObject={userObject}
+                    isUpdating={isUpdating}
+                    updatedName={updatedName}
+                    setUpdatedName={setUpdatedName}
+                    updatedPhoneNumber={updatedPhoneNumber}
+                    setUpdatedPhoneNumber={setUpdatedPhoneNumber}
+                    updatedLocation={updatedLocation}
+                    setUpdatedLocation={setUpdatedLocation}
+                  />
+                </center>
 
-                  <Grid.Container style={{ marginTop: "4vh" }}>
-                    <Grid css={{ margin: "auto" }}>
-                      <div
-                        style={{
-                          margin: 0,
-                          marginRight: "4vw",
-                          marginLeft: "2vw",
-                        }}
-                      >
-                        <Text css={{ margin: 0, textAlign: "center" }} h4>
-                          100+
-                        </Text>
-                        <Text css={{ textAlign: "center" }}>Friends</Text>
-                      </div>
-                    </Grid>
-                    <Grid css={{ margin: "auto" }}>
-                      <div style={{ margin: 0, marginRight: "4vw" }}>
-                        <Text css={{ margin: 0, textAlign: "center" }} h4>
-                          14
-                        </Text>
-                        <Text css={{ textAlign: "center" }}>Lobbies</Text>
-                      </div>
-                    </Grid>
-                    <Grid css={{ margin: "auto" }}>
-                      <div style={{ margin: 0, marginRight: "4vw" }}>
-                        <Text css={{ margin: 0, textAlign: "center" }} h4>
-                          23
-                        </Text>
-                        <Text css={{ textAlign: "center" }}>Achievements</Text>
-                      </div>
-                    </Grid>
-                    <Grid css={{ margin: "auto" }}>
-                      <div style={{ margin: 0, marginRight: "4vw" }}>
-                        <Text css={{ margin: 0, textAlign: "center" }} h4>
-                          12
-                        </Text>
-                        <Text css={{ textAlign: "center" }}>
-                          Lobbies Joined
-                        </Text>
-                      </div>
-                    </Grid>
-                    <Grid css={{ margin: "auto" }}>
-                      <div style={{ margin: 0, marginRight: "4vw" }}>
-                        <Text css={{ margin: 0, textAlign: "center" }} h4>
-                          5
-                        </Text>
-                        <Text css={{ textAlign: "center" }}>
-                          Lobbies Created
-                        </Text>
-                      </div>
-                    </Grid>
-                  </Grid.Container>
-                  <Spacer style={{ width: "100%" }} y={2} />
-                  <Row></Row>
-                  <Text
-                    css={{ textAlign: "justify", margin: "auto", maxW: 600 }}
-                  >
-                    <h4 css={{ margin: 0 }}>Bio:</h4>
-                    {user.bio ? user.bio : "No bio yet"}
-                  </Text>
-                </Grid>
-                <Spacer y={4} />
-                <Button
-                  auto
-                  color=""
-                  css={{
-                    color: "white",
-                    backgroundColor: "$black",
-                    fontWeight: "700",
-                    margin: "auto",
-                  }}
-                >
-                  Change Information
-                </Button>
-              </Grid.Container>
+                <ProfileStats userObject={userObject} />
+              </div>
+
+              <BioArea
+                isUpdating={isUpdating}
+                updatedBio={updatedBio}
+                userObject={userObject}
+                setUpdatedBio={setUpdatedBio}
+              />
+              <EditProfileButton
+                isUpdating={isUpdating}
+                handleSubmission={handleSubmission}
+                setIsUpdating={setIsUpdating}
+              />
             </>
           }
         />
@@ -170,39 +134,12 @@ function ProfilePage() {
           style={{ marginTop: "2vh" }}
           children={
             <>
-              <Grid.Container>
-                <Grid>
-                  <Row>
-                    <Text h4>Interests: </Text>
-                  </Row>
-                </Grid>
-              </Grid.Container>
-
-              <Grid>
-                <ScrollMenu
-                  onWheel={onWheel}
-                  onMouseDown={() => dragStart}
-                  onMouseUp={() => dragStop}
-                  onMouseMove={handleDrag}
-                  style={{ display: "flex" }}
-                >
-                  {interest_selection.map((interest, index) => (
-                    <Badge
-                      style={{ marginRight: 8 }}
-                      isSquared
-                      variant={"flat"}
-                      css={{ backgroundColor: "$white" }}
-                      key={index}
-                    >
-                      {interest.interest}
-                    </Badge>
-                  ))}
-                </ScrollMenu>
-              </Grid>
+              <Interests userObject={userObject} />
               <Button
                 light
                 flat
                 auto
+                style={{ maxWidth: 300, margin: "auto" }}
                 color=""
                 onPress={() => navigate("/interest-selection")}
               >

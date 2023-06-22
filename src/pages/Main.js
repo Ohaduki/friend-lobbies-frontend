@@ -1,4 +1,4 @@
-import { Card, Container, Row } from "@nextui-org/react";
+import { Card, Container, Row, Spacer } from "@nextui-org/react";
 import TopNavbar from "../components/navbar/TopNavbar";
 import "../styles/Main.css";
 import UserInfo from "../components/Main/UserInfo";
@@ -51,18 +51,16 @@ export default function Main() {
         <MainCard
           children={
             <>
-              <UserInfo
-                imgSrc={
-                  "https://ca.slack-edge.com/T046G9D7MGU-U04ALRSD91T-6a4689126259-512"
-                }
-                username={"Aviad the King"}
-              />
+              <UserInfo/>
               <DisplaySelection handleClick={handleClick} />
               {renderContent()}
             </>
           }
         />
       </main>
+      <footer>
+          <Spacer y={2}/>
+      </footer>
     </>
   );
 }

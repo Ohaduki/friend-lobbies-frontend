@@ -5,7 +5,6 @@ import interest_selection from "../../data/interest_selection.json";
 const categories = interest_selection.sort((a, b) =>
   a.interest.localeCompare(b.interest)
 );
-console.log(categories);
 
 export default function DropwdownCategory({ selected, setSelected, type }) {
   const selectedValue = React.useMemo(
@@ -35,7 +34,7 @@ export default function DropwdownCategory({ selected, setSelected, type }) {
         onSelectionChange={setSelected}
       >
         {categories.map((category) => (
-          <Dropdown.Item key={category.interest + category.emoji}>
+          <Dropdown.Item key={category.interest}>
             {category.interest + category.emoji}
           </Dropdown.Item>
         ))}
