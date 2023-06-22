@@ -16,12 +16,14 @@ import "../styles/Main.css";
 import MainCard from "../components/Reusable/MainCard";
 import interest_selection from "../data/interest_selection.json";
 import { ScrollMenu } from "react-horizontal-scrolling-menu";
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 import useDrag from "../hooks/useDrag";
 import { useNavigate } from "react-router-dom";
 import { Location } from "react-iconly";
+import UserContext from "../context/UserContext";
 
 function ProfilePage() {
+  const {user, setUser} = useContext(UserContext);
   const navigate = useNavigate();
 
   const { dragStart, dragStop, dragMove, dragging } = useDrag();
@@ -66,23 +68,23 @@ function ProfilePage() {
                   <Row>
                     <Col css={{ margin: "auto" }}>
                       <Avatar
-                        src="https://ca.slack-edge.com/T046G9D7MGU-U04ALRSD91T-6a4689126259-512"
+                        src={user.picture}
                         css={{ size: "$20", margin: "auto" }}
                       />
                     </Col>
                   </Row>
                   <center>
                     <Text h3 css={{ marginTop: "2vh" }}>
-                      Aviad The King
+                      {user.firstName} {user.lastName}
                     </Text>
 
-                    <Text>
+                    {/* <Text>
                       <Location
                         set="bold"
                         style={{ height: 14, color: "red" }}
                       />
                       Tel Aviv, Israel{" "}
-                    </Text>
+                    </Text> */}
                   </center>
 
                   <Grid.Container style={{ marginTop: "4vh" }}>
@@ -143,16 +145,7 @@ function ProfilePage() {
                     css={{ textAlign: "justify", margin: "auto", maxW: 600 }}
                   >
                     <h4 css={{ margin: 0 }}>Bio:</h4>
-                    Lorem Ipsum is simply dummy text of the printing and
-                    typesetting industry. Lorem Ipsum has been the industry's
-                    standard dummy text ever since the 1500s, when an unknown
-                    printer took a galley of type and scrambled it to make a
-                    type specimen book. It has survived not only five centuries,
-                    but also the leap into electronic typesetting, remaining
-                    essentially unchanged. It was popularised in the 1960s with
-                    the release of Letraset sheets containing Lorem Ipsum
-                    passages, and more recently with desktop publishing software
-                    like Aldus PageMaker including versions of Lorem Ipsum
+                    {user.bio ? user.bio : "No bio yet"}
                   </Text>
                 </Grid>
                 <Spacer y={4} />
